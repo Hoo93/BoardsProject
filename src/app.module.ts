@@ -7,11 +7,11 @@ import { CommentsLikeModule } from './comments_like/comments_like.module';
 import { CommentsModule } from './comments/comments.module';
 import { NoticesModule } from './notices/notices.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './config/typeorm.config';
+import { typeormConfig } from './config/typeorm.config';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(typeOrmConfig),
+        TypeOrmModule.forRoot(typeormConfig),
         UsersModule,
         BoardsModule,
         CategoriesModule,
