@@ -1,11 +1,9 @@
+import { EntityBase } from "src/base.Entity";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 @Unique(['username'])
-export class User extends BaseEntity {
-    @PrimaryGeneratedColumn('increment')
-    id: number;
-
+export class User extends EntityBase {
     @Column()
     username: string;
 
@@ -14,10 +12,4 @@ export class User extends BaseEntity {
 
     @Column()
     nickname: string;
-
-    @Column()
-    created_at: string;
-
-    @Column()
-    updated_at: string;
 }
