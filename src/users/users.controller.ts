@@ -12,9 +12,28 @@ export class UsersController {
         return this.usersService.createUser(createUserDto);
     }
 
+    @Patch('/:id')
+    updateUser(@Param('id') id:number,@Body() updateUserDto:UpdateUserDto) {
+        return this.usersService.updateUser(id,updateUserDto);
+    }
+
     @Get()
     getAllUsers() {
-        return this.usersService.findAll();
+        return this.usersService.getAllUsers();
     }
+
+    @Get('/:id')
+    getUser(@Param('id') id:number) {
+        return this.usersService.getUser(id);
+    }
+
+    @Delete('/:id')
+    deleteUser(@Param('id') id:number) {
+        return this.usersService.deleteUser(id);
+    }
+    
+
+
+
 
 }
