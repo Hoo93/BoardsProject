@@ -8,10 +8,11 @@ import { CommentsModule } from './comments/comments.module';
 import { NoticesModule } from './notices/notices.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeormConfig } from './config/typeorm.config';
+import { databaseProviders } from './config/database.providers';
 
 @Module({
     imports: [
-        TypeOrmModule.forRoot(typeormConfig),
+        // TypeOrmModule.forRoot(typeormConfig),
         UsersModule,
         BoardsModule,
         CategoriesModule,
@@ -19,6 +20,7 @@ import { typeormConfig } from './config/typeorm.config';
         CommentsLikeModule,
         CommentsModule,
         NoticesModule,
-    ]
+    ],
+    providers:[...databaseProviders]
 })
 export class AppModule {}
