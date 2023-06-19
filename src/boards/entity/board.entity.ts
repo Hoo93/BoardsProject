@@ -1,20 +1,22 @@
 import { Cipher } from "crypto";
 import { EntityBase } from "src/base.Entity";
-import { Column, Entity } from "typeorm";
+import { Category } from "src/categories/entity/category.entity";
+import { User } from "src/users/entity/user.entity";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 
 @Entity()
 export class Board extends EntityBase {
 
-    @Column()
-    user_id:number;
+    @ManyToOne(() => Category, category => category.boards)
+    category:Category;
 
-    @Column()
-    category_id:number;
-    
     @Column()
     title:string;
 
     @Column()
     content:string;
+
+    @ManyToOne(() => User, user => user.boards)
+    user:User;
 
 }

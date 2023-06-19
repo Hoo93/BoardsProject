@@ -6,19 +6,26 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { User } from 'src/users/entity/user.entity';
 import { getCurrentDateTime } from 'src/getCurrentDateTime';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { Category } from 'src/categories/entity/category.entity';
 
 @Injectable()
 export class BoardsService {
     constructor(
         @Inject('BOARD_REPOSITORY')
-        private boardsRepository:Repository<Board>
+        private boardsRepository:Repository<Board>,
+        @Inject('CATEGORY_REPOSITORY')
+        private catetoriesRepository:Repository<Category>
     ) {}
 
     async createBoard(user:User,createBoardDto:CreateBoardDto) {
         const { category_id, title, content } = createBoardDto;
+        const category = await this.catetoriesRepository.findOneBy({id:category_id});
+        if (!category) {
+            throw new NotFoundException('category does not exist')
+        }
         const board = await this.boardsRepository.create({
-            user_id:user.id,
-            category_id,
+            user:user,
+            category,
             title,
             content,
             created_at:getCurrentDateTime(),
@@ -63,15 +70,15 @@ export class BoardsService {
 
     
     async updateBoard(user:User,id:number,updateBoardDto:UpdateBoardDto):Promise<UpdateResult> {
+        // TO DO 수정 내용 없으면 에러 던지기
         if (!updateBoardDto) {
             throw new BadRequestException();
         }
-        console.log(updateBoardDto)
         const board = await this.getBoardById(id);
         if (!board) {
             throw new NotFoundException();
         }
-        if (board.user_id !== user.id) {
+        if (board.user.id !== user.id) {
             throw new UnauthorizedException();
         }
         const result = await this.boardsRepository.update(id,{...updateBoardDto,updated_at:getCurrentDateTime()});
@@ -87,7 +94,7 @@ export class BoardsService {
     async deleteBoard(user:User,id:number):Promise<DeleteResult> {
         const board = await this.getBoardById(id);
         
-        if (board.user_id !== user.id) {
+        if (board.user.id !== user.id) {
             throw new UnauthorizedException();
         }
 
