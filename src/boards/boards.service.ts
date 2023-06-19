@@ -18,14 +18,14 @@ export class BoardsService {
     ) {}
 
     async createBoard(user:User,createBoardDto:CreateBoardDto) {
-        const { category_id, title, content } = createBoardDto;
-        const category = await this.catetoriesRepository.findOneBy({id:category_id});
+        const { categoryId, title, content } = createBoardDto;
+        const category = await this.catetoriesRepository.findOneBy({id:categoryId});
         if (!category) {
             throw new NotFoundException('category does not exist')
         }
         const board = await this.boardsRepository.create({
             user:user,
-            categoryId:category_id,
+            categoryId:categoryId,
             title,
             content,
             created_at:getCurrentDateTime(),

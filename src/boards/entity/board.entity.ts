@@ -1,3 +1,4 @@
+import { min } from "class-validator";
 import { EntityBase } from "src/base.Entity";
 import { BoardLike } from "src/boards_likes/entity/board_like.entity";
 import { Category } from "src/categories/entity/category.entity";
@@ -8,14 +9,17 @@ import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 @Entity()
 export class Board extends EntityBase {
 
-    @Column()
+    @Column('varchar')
     title:string;
 
-    @Column()
+    @Column('text')
     content:string;
 
-    @Column()
+    @Column('int')
     categoryId:number;
+
+    @Column('int')
+    userId:number;
 
     @ManyToOne(() => User, user => user.boards)
     user:User;
@@ -28,6 +32,5 @@ export class Board extends EntityBase {
 
     @OneToMany(() => BoardLike, boardlikes => boardlikes.board)
     boardLikes:BoardLike[];
-
 
 }

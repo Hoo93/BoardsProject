@@ -5,7 +5,7 @@ export class CreateBoardDto {
 
     @IsInt()
     @IsNotEmpty()
-    category_id:number;
+    categoryId:number;
     
     @IsString()
     @MaxLength(20)
