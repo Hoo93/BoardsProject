@@ -27,8 +27,8 @@ export class UsersController {
 
     @Patch()
     @UseGuards(AuthGuard())
-    updateUser(@Body() updateUserDto:UpdateUserDto) {
-        return this.usersService.updateUser(updateUserDto);
+    updateUser(@Request() req:any,@Body() updateUserDto:UpdateUserDto) {
+        return this.usersService.updateUser(req.user,updateUserDto);
     }
 
     @Get()
@@ -36,14 +36,15 @@ export class UsersController {
         return this.usersService.getAllUsers();
     }
 
-    @Get('/:id')
+    @Get()
     getUser(@Param('id') id:number) {
         return this.usersService.getUser(id);
     }
 
     @Delete('/:id')
-    deleteUser(@Param('id') id:number) {
-        return this.usersService.deleteUser(id);
+    @UseGuards(AuthGuard())
+    deleteUser(@Request() req:any) {
+        return this.usersService.deleteUser(req.user);
     }
     
 

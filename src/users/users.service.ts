@@ -68,16 +68,15 @@ export class UsersService {
     async updateUser(user:User,updateUserDto:UpdateUserDto): Promise<UpdateResult> {
         const result = await this.userRepository.update(user.id,{...updateUserDto,updated_at:getCurrentDateTime()});
         if ( result.affected === 0 ) {
-            throw new NotFoundException(`user with id: ${id} doesn't exist`)
+            throw new NotFoundException(`user with id: ${user.id} doesn't exist`)
         }
         return result        
     }
 
-    async deleteUser(id:number) {
-        const user = await this.getUser(id);
-        const result = await this.userRepository.delete(id);
+    async deleteUser(user:User) {
+        const result = await this.userRepository.delete(user.id);
         if ( result.affected === 0 ) {
-            throw new NotFoundException(`user with id: ${id} doesn't exist`)
+            throw new NotFoundException(`user with id: ${user.id} doesn't exist`)
         }
         return result        
     }
