@@ -74,19 +74,27 @@ export class BoardsService {
         if (!updateBoardDto) {
             throw new BadRequestException();
         }
+        
         const board = await this.getBoardById(id);
         if (!board) {
             throw new NotFoundException();
         }
-        if (board.user.id !== user.id) {
+        
+        if (board.userId !== user.id) {
             throw new UnauthorizedException();
         }
-        const result = await this.boardsRepository.update(id,{...updateBoardDto,updated_at:getCurrentDateTime()});
-
-        if (result.affected === 0){
+        
+        const updateResult = await this.boardsRepository.update(
+            id,
+            {
+                ...updateBoardDto,
+                updated_at:getCurrentDateTime()
+            });
+            
+        if (updateResult.affected === 0){
             throw new InternalServerErrorException();
         }
-        return result
+        return updateResult
         
     }
 

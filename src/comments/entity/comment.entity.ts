@@ -1,3 +1,4 @@
+import { Cipher } from "crypto";
 import { EntityBase } from "src/base.Entity";
 import { Board } from "src/boards/entity/board.entity";
 import { CommentLike } from "src/comments_like/entity/comment_like.entity";
@@ -6,6 +7,15 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
 
 @Entity()
 export class Comment extends EntityBase {
+
+    @Column()
+    boardId:number;
+
+    @Column()
+    userId:number;
+    
+    @Column()
+    content:string;
     
     @ManyToOne(() => User, user => user.comments)
     user:User;
@@ -16,8 +26,7 @@ export class Comment extends EntityBase {
     @OneToMany(() => CommentLike, commentLikes => commentLikes.comment)
     commentLikes:CommentLike[];
 
-    @Column()
-    content:string;
+    
 
 
 
