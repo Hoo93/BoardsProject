@@ -25,7 +25,7 @@ export class BoardsService {
         }
         const board = await this.boardsRepository.create({
             user:user,
-            category,
+            categoryId:category_id,
             title,
             content,
             created_at:getCurrentDateTime(),

@@ -1,13 +1,15 @@
 import { EntityBase } from "src/base.Entity";
-import { Column, Entity } from "typeorm";
+import { Comment } from "src/comments/entity/comment.entity";
+import { User } from "src/users/entity/user.entity";
+import { Column, Entity, ManyToOne } from "typeorm";
 
 @Entity()
 export class CommentLike extends EntityBase {
 
-    @Column()
-    user_id:number;
+    @ManyToOne(() => User,user => user.commentLikes)
+    user:User;
 
-    @Column()
-    comment_id:number;
+    @ManyToOne(() => Comment, comment => comment.commentLikes)
+    comment:Comment;
 
 }
