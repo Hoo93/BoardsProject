@@ -12,7 +12,7 @@ import { databaseProviders } from './config/database.providers';
 
 @Module({
     imports: [
-        // TypeOrmModule.forRoot(typeormConfig),
+        TypeOrmModule.forRoot(typeormConfig),
         UsersModule,
         BoardsModule,
         CategoriesModule,

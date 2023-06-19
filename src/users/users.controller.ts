@@ -2,10 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthCredentialDto } from './dto/auth-credential.dto';
 
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
+
+    @Post('/login')
+    signIn(@Body() authCredentialDto:AuthCredentialDto) {
+        return this.usersService.login(authCredentialDto);
+    }
 
     @Post()
     createUser(@Body() createUserDto: CreateUserDto) {
