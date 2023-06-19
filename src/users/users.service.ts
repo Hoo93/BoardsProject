@@ -65,9 +65,8 @@ export class UsersService {
         }
     }
 
-    async updateUser(id:number,updateUserDto:UpdateUserDto): Promise<UpdateResult> {
-        const user = await this.getUser(id);
-        const result = await this.userRepository.update(id,{...updateUserDto,updated_at:getCurrentDateTime()});
+    async updateUser(user:User,updateUserDto:UpdateUserDto): Promise<UpdateResult> {
+        const result = await this.userRepository.update(user.id,{...updateUserDto,updated_at:getCurrentDateTime()});
         if ( result.affected === 0 ) {
             throw new NotFoundException(`user with id: ${id} doesn't exist`)
         }
