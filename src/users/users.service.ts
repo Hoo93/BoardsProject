@@ -6,22 +6,28 @@ import { User } from './entity/user.entity';
 import { getCurrentDateTime } from 'src/getCurrentDateTime';
 import * as bcrypt from 'bcrypt'
 import { AuthCredentialDto } from './dto/auth-credential.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
     constructor(
         @Inject('USER_REPOSITORY')
-        private userRepository:Repository<User>
+        private userRepository:Repository<User>,
+        private jwtService:JwtService
     ) {}
 
-    async login(authCredentialDto:AuthCredentialDto) {
+    async signIn(authCredentialDto:AuthCredentialDto):Promise<object> {
         const { username, password } = authCredentialDto;
         const user = await this.userRepository.findOneBy({username});
         
         if ( user && (await bcrypt.compare(password,user?.password)) ) {
-            return 'login success'
+            // 유저 토큰 생성
+            const payload = { username:user.username, sub:user.id }
+            const access_token = await this.jwtService.sign(payload);
+    
+            return { access_token }
         } else {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException('login failed');
         }
     }
 

@@ -8,12 +8,12 @@ import { AuthCredentialDto } from './dto/auth-credential.dto';
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @Post('/login')
-    signIn(@Body() authCredentialDto:AuthCredentialDto) {
-        return this.usersService.login(authCredentialDto);
+    @Post('/signin')
+    signIn(@Body() authCredentialDto:AuthCredentialDto):Promise<object> {
+        return this.usersService.signIn(authCredentialDto);
     }
 
-    @Post()
+    @Post('/signup')
     createUser(@Body() createUserDto: CreateUserDto) {
         return this.usersService.createUser(createUserDto);
     }
