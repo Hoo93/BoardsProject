@@ -6,6 +6,12 @@ import { Column, Entity, ManyToOne } from "typeorm";
 @Entity()
 export class CommentLike extends EntityBase {
 
+    @Column('int')
+    userId:number;
+
+    @Column('int')
+    commentId:number;
+
     @ManyToOne(() => User,user => user.commentLikes)
     user:User;
 

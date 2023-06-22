@@ -27,10 +27,10 @@ export class Board extends EntityBase {
     @ManyToOne(() => Category, category => category.boards)
     category:Category;
 
-    @OneToMany(() => Comment, comments => comments.board)
+    @OneToMany(() => Comment, comments => comments.board,{eager:true})
     comments:Comment[];
 
-    @OneToMany(() => BoardLike, boardlikes => boardlikes.board)
+    @OneToMany(() => BoardLike, boardlikes => boardlikes.board,{eager:true})
     boardLikes:BoardLike[];
 
 }

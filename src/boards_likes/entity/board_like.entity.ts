@@ -6,6 +6,12 @@ import { Column, Entity, ManyToOne, OneToMany, OneToOne } from "typeorm";
 @Entity()
 export class BoardLike extends EntityBase {
 
+    @Column('int')
+    userId:number;
+
+    @Column('int')
+    boardId:number;
+
     @ManyToOne(() => User,user => user.boardLikes)
     user:User;
 
